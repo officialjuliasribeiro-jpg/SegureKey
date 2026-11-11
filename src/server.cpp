@@ -1,4 +1,4 @@
-
+#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -599,16 +599,32 @@ int main() {
     // ==========================================
     // INICIAR SERVIDOR
     // ==========================================
-
+    
     std::cout << "\n";
     std::cout << "==============================\n";
     std::cout << "       SECUREKEY SERVER       \n";
     std::cout << "==============================\n";
-    std::cout << "Servidor: http://127.0.0.1:8080\n";
+    std::cout << "Servidor iniciado.\n";
     std::cout << "Cofre criptografado habilitado.\n";
     std::cout << "Documentos protegidos habilitados.\n\n";
 
-    if (!servidor.listen("127.0.0.1", 8080)) {
+    const char* portaAmbiente = std::getenv("PORT");
+
+    int porta = 8080;
+
+    if (portaAmbiente != nullptr) {
+        try {
+            porta = std::stoi(portaAmbiente);
+        } catch (...) {
+            std::cerr << "Porta invalida!\n";
+            return 1;
+        }
+    }
+
+    std::cout << "SecureKey iniciado na porta "
+              << porta << std::endl;
+
+    if (!servidor.listen("0.0.0.0", porta)) {
         std::cerr << "Erro ao iniciar servidor.\n";
         return 1;
     }
