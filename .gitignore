@@ -1,0 +1,24 @@
+# Arquivos de compilação
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Executáveis
+/SecureKey
+/SecureKeyServer
+
+# Dados privados e documentos
+/data/
+*.skd
+
+# Configurações e segredos
+.env
+.env.*
+*.pem
+*.key
+
+# Git
+.git/

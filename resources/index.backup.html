@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecureKey | Digital Vault</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1120;
+    color: #e8edf7;
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 255px;
+    background: #101a2c;
+    border-right: 1px solid #24334c;
+    padding: 28px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #60a5fa;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #8493aa;
+    font-size: 12px;
+    margin-bottom: 35px;
+}
+
+.section-title {
+    color: #71819b;
+    font-size: 11px;
+    margin: 20px 10px 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-button {
+    background: transparent;
+    border: none;
+    color: #aebbd0;
+    width: 100%;
+    text-align: left;
+    padding: 13px;
+    margin: 3px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.nav-button:hover,
+.nav-button.active {
+    background: #1d3556;
+    color: #60a5fa;
+}
+
+.main {
+    flex: 1;
+    padding: 35px;
+    min-width: 0;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.topbar h1 {
+    font-size: 27px;
+}
+
+.topbar p {
+    color: #8493aa;
+    margin-top: 7px;
+    font-size: 13px;
+}
+
+.profile {
+    background: #17243a;
+    border: 1px solid #293c58;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.status {
+    color: #4ade80;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.card {
+    background: #131f33;
+    border: 1px solid #273750;
+    padding: 22px;
+    border-radius: 13px;
+}
+
+.card small {
+    color: #91a0b7;
+}
+
+.card h2 {
+    font-size: 29px;
+    margin-top: 14px;
+}
+
+.card p {
+    color: #8493aa;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.panel {
+    background: #131f33;
+    border: 1px solid #273750;
+    border-radius: 13px;
+    padding: 25px;
+    margin-bottom: 22px;
+}
+
+.panel h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.module {
+    background: #192941;
+    border: 1px solid #2c405d;
+    padding: 22px;
+    border-radius: 11px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.module:hover {
+    border-color: #60a5fa;
+    transform: translateY(-3px);
+}
+
+.module .icon {
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+.module h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.module p {
+    color: #91a0b7;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.activity {
+    color: #aebbd0;
+    font-size: 13px;
+    line-height: 2.4;
+}
+
+.tag {
+    color: #fbbf24;
+    font-size: 11px;
+}
+
+button:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 3px;
+}
+
+@media(max-width: 1000px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .module-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    body {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+    }
+    .main {
+        padding: 20px;
+    }
+    .cards, .module-grid {
+        grid-template-columns: 1fr;
+    }
+}
+input, textarea {
+    width: 100%;
+    background: #0b1120;
+    color: #e8edf7;
+    border: 1px solid #354761;
+    border-radius: 8px;
+    padding: 13px;
+    margin-top: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #60a5fa;
+}
+
+label {
+    color: #aebbd0;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">🔐 SecureKey</div>
+    <div class="subtitle">DIGITAL SECURITY SYSTEM</div>
+
+    <div class="section-title">Principal</div>
+
+    <button class="nav-button active" data-page="dashboard">
+        ◈ Dashboard
+    </button>
+
+    <div class="section-title">Meus cofres</div>
+
+    <button class="nav-button" data-page="personal">
+        👤 Organizador financeiro
+    </button>
+
+    <button class="nav-button" data-page="passwords">
+        🔑 Gerenciador de senhas
+    </button>
+
+    <button class="nav-button" data-page="finance">
+        💳 Cofre financeiro
+    </button>
+
+    <button class="nav-button" data-page="documents">
+        📁 Documentos
+    </button>
+
+    <button class="nav-button" data-page="messages">
+        ✉ Mensagens privadas
+    </button>
+
+    <div class="section-title">Sistema</div>
+
+    <button class="nav-button" data-page="pay">
+        ◉ SecurePay
+    </button>
+
+    <button class="nav-button" data-page="security">
+        🛡 Central de segurança
+    </button>
+
+    <button class="nav-button" data-page="math">
+        ∑ Laboratório matemático
+    </button>
+
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+    <div>
+        <h1 id="page-title">Dashboard</h1>
+        <p>Bem-vinda ao seu ambiente digital protegido.</p>
+    </div>
+
+    <div class="profile">
+        ● <span class="status">Sistema demonstrativo</span>
+    </div>
+</header>
+
+<!-- DASHBOARD -->
+
+<section class="page active" id="dashboard">
+
+    <div class="cards">
+
+        <div class="card">
+            <small>Registros pessoais</small>
+            <h2>00</h2>
+            <p>Informações cadastradas</p>
+        </div>
+
+        <div class="card">
+            <small>Senhas protegidas</small>
+            <h2>00</h2>
+            <p>Gerenciador de senhas</p>
+        </div>
+
+        <div class="card">
+            <small>Documentos</small>
+            <h2>00</h2>
+            <p>Arquivos cadastrados</p>
+        </div>
+
+        <div class="card">
+            <small>Segurança</small>
+            <h2>---</h2>
+            <p>Autenticação ainda não configurada</p>
+        </div>
+
+    </div>
+
+    <div class="panel">
+        <h2>Seus módulos</h2>
+
+        <div class="module-grid">
+
+            <div class="module" data-target="personal">
+                <div class="icon">👤</div>
+                <h3>Organizador financeiro</h3>
+                <p>Proteção de informações pessoais.</p>
+            </div>
+
+            <div class="module" data-target="passwords">
+                <div class="icon">🔑</div>
+                <h3>Senhas</h3>
+                <p>Gerenciamento de credenciais.</p>
+            </div>
+
+            <div class="module" data-target="finance">
+                <div class="icon">💳</div>
+                <h3>Cofre financeiro</h3>
+                <p>Organização de informações financeiras.</p>
+            </div>
+
+            <div class="module" data-target="documents">
+                <div class="icon">📁</div>
+                <h3>Documentos</h3>
+                <p>Área de gerenciamento de arquivos.</p>
+            </div>
+
+            <div class="module" data-target="security">
+                <div class="icon">🛡</div>
+                <h3>Segurança</h3>
+                <p>Configurações e proteção do sistema.</p>
+            </div>
+
+            <div class="module" data-target="math">
+                <div class="icon">∑</div>
+                <h3>Laboratório matemático</h3>
+                <p>Matrizes e aritmética modular.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Informações do sistema</h2>
+        <div class="activity">
+    • Interface gráfica inicializada.<br>
+
+    • Núcleo C++:
+    <strong id="backend-status">Verificando...</strong><br>
+
+    • Criptografia: aguardando implementação.<br>
+    • Autenticação: aguardando implementação.
+</div>
+    </div>
+
+</section>
+
+<!-- DEMAIS MÓDULOS -->
+
+<section class="page" id="personal">
+
+    <div class="panel">
+        <h2>🔐 Meu organizador financeiro</h2>
+
+        <p>Seus registros serão criptografados antes de serem armazenados.</p>
+
+        <br>
+
+        <form id="vault-form">
+
+            <label>Senha mestra</label>
+            <input
+                type="password"
+                id="master-password"
+                minlength="12"
+                maxlength="128"
+                required
+                autocomplete="off"
+                placeholder="Mínimo de 12 caracteres"
+            >
+
+            <br><br>
+
+            <label>Título do registro</label>
+            <input
+                type="text"
+                id="record-title"
+                maxlength="200"
+                required
+                placeholder="Ex.: Anotações pessoais"
+            >
+
+            <br><br>
+
+            <label>Informação</label>
+            <textarea
+                id="record-information"
+                maxlength="10000"
+                required
+                placeholder="Digite sua informação..."
+                rows="5"
+            ></textarea>
+
+            <br><br>
+
+            <button type="submit" class="nav-button active">
+                🔒 Criptografar e salvar
+            </button>
+
+        </form>
+
+        <p id="vault-message"></p>
+    </div>
+
+    <div class="panel">
+
+        <h2>📂 Registros armazenados</h2>
+
+        <button
+            class="nav-button active"
+            onclick="carregarCofre()"
+        >
+            🔓 Desbloquear e visualizar
+        </button>
+
+        <div id="vault-records">
+            <p>Nenhum registro carregado.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="page" id="passwords">
+    <div class="panel">
+        <h2>🔑 Gerenciador de senhas</h2>
+        <p>Gerenciamento centralizado de credenciais.</p>
+        <p class="tag">Módulo aguardando integração com C++.</p>
+    </div>
+</section>
+
+<section class="page" id="finance">
+    <div class="panel">
+        <h2>💳 Cofre financeiro</h2>
+        <p>Área para informações bancárias e financeiras.</p>
+        <p class="tag">Módulo aguardando integração com C++.</p>
+    </div>
+</section>
+
+<section class="page" id="documents">
+    <div class="panel">
+        <h2>📁 Documentos protegidos</h2>
+        <p>Gerenciamento de documentos e arquivos.</p>
+        <p class="tag">Módulo aguardando integração com C++.</p>
+    </div>
+</section>
+
+<section class="page" id="messages">
+    <div class="panel">
+        <h2>✉ Mensagens privadas</h2>
+        <p>Ambiente para armazenamento de mensagens.</p>
+        <p class="tag">Módulo aguardando integração com C++.</p>
+    </div>
+</section>
+
+<section class="page" id="pay">
+    <div class="panel">
+        <h2>◉ SecurePay</h2>
+        <p>Simulador de operações financeiras.</p>
+        <p class="tag">Ambiente exclusivamente demonstrativo.</p>
+    </div>
+</section>
+
+<section class="page" id="security">
+    <div class="panel">
+        <h2>🛡 Central de segurança</h2>
+        <p>Configurações de autenticação, chave USB e criptografia.</p>
+        <p class="tag">Recursos ainda não ativados.</p>
+    </div>
+</section>
+
+<section class="page" id="math">
+    <div class="panel">
+        <h2>∑ Laboratório matemático</h2>
+        <p>Estudo de matrizes inversíveis, determinantes e aritmética modular.</p>
+        <p class="tag">Laboratório aguardando implementação.</p>
+    </div>
+</section>
+
+</main>
+
+<script>
+const buttons = document.querySelectorAll("[data-page]");
+const modules = document.querySelectorAll("[data-target]");
+
+function openPage(pageId) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav-button").forEach(button => {
+        button.classList.remove("active");
+    });
+
+    const page = document.getElementById(pageId);
+
+    if (!page) return;
+
+    page.classList.add("active");
+
+    const button = document.querySelector(
+        '.nav-button[data-page="' + pageId + '"]'
+    );
+
+    if (button) button.classList.add("active");
+
+    document.getElementById("page-title").textContent =
+        button ? button.textContent.trim() : "SecureKey";
+}
+
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        openPage(button.dataset.page);
+    });
+});
+
+modules.forEach(module => {
+    module.addEventListener("click", () => {
+        openPage(module.dataset.target);
+    });
+});
+async function verificarBackend() {
+    const status = document.getElementById("backend-status");
+
+    try {
+        const resposta = await fetch("/api/status");
+
+        if (!resposta.ok) {
+            throw new Error("Servidor indisponível");
+        }
+
+        const dados = await resposta.json();
+
+        status.textContent = dados.status === "online"
+            ? " ONLINE - C++ conectado"
+            : "Indisponível";
+
+        status.style.color = "#4ade80";
+
+    } catch (erro) {
+        status.textContent = "OFFLINE";
+        status.style.color = "#f87171";
+    }
+}
+
+verificarBackend();
+// CADASTRAR REGISTRO
+document.getElementById("vault-form")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const senha = document.getElementById("master-password").value;
+    const titulo = document.getElementById("record-title").value;
+    const informacao =
+        document.getElementById("record-information").value;
+
+    const mensagem = document.getElementById("vault-message");
+
+    mensagem.textContent = "Criptografando...";
+
+    try {
+
+        const resposta = await fetch("/api/vault/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                senha,
+                titulo,
+                informacao
+            })
+        });
+
+        const resultado = await resposta.json();
+
+        if (!resultado.success) {
+            throw new Error(resultado.error);
+        }
+
+        mensagem.textContent = "✓ " + resultado.message;
+        mensagem.style.color = "#4ade80";
+
+        document.getElementById("record-title").value = "";
+        document.getElementById("record-information").value = "";
+
+    } catch (erro) {
+
+        mensagem.textContent = "Erro: " + erro.message;
+        mensagem.style.color = "#f87171";
+
+    }
+
+});
+
+
+// DESBLOQUEAR E LISTAR REGISTROS
+async function carregarCofre() {
+
+    const senha = document.getElementById("master-password").value;
+    const area = document.getElementById("vault-records");
+
+    if (!senha) {
+        area.textContent = "Digite sua senha mestra primeiro.";
+        return;
+    }
+
+    area.textContent = "Desbloqueando cofre...";
+
+    try {
+
+        const resposta = await fetch("/api/vault/list", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ senha })
+        });
+
+        const resultado = await resposta.json();
+
+        if (!resultado.success) {
+            throw new Error(resultado.error);
+        }
+
+        area.replaceChildren();
+
+        if (resultado.registros.length === 0) {
+            area.textContent = "O cofre está vazio.";
+            return;
+        }
+
+        resultado.registros.forEach((registro, indice) => {
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = registro.titulo;
+
+            const informacao = document.createElement("p");
+            informacao.textContent = registro.informacao;
+
+            // BOTAO EDITAR
+            const editar = document.createElement("button");
+            editar.textContent = "✏️ Editar";
+            editar.className = "nav-button";
+
+            editar.onclick = async () => {
+
+                const novoTitulo = prompt(
+                    "Novo título:",
+                    registro.titulo
+                );
+
+                if (novoTitulo === null) return;
+
+                const novaInformacao = prompt(
+                    "Nova informação:",
+                    registro.informacao
+                );
+
+                if (novaInformacao === null) return;
+
+                try {
+
+                    const resposta = await fetch("/api/vault/edit", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            senha,
+                            indice,
+                            titulo: novoTitulo,
+                            informacao: novaInformacao
+                        })
+                    });
+
+                    const resultado = await resposta.json();
+
+                    if (!resultado.success) {
+                        throw new Error(resultado.error);
+                    }
+
+                    alert("Registro atualizado!");
+
+                    carregarCofre();
+
+                } catch (erro) {
+                    alert("Erro: " + erro.message);
+                }
+            };
+
+
+            // BOTAO EXCLUIR
+            const excluir = document.createElement("button");
+            excluir.textContent = "🗑️ Excluir";
+            excluir.className = "nav-button";
+
+            excluir.onclick = async () => {
+
+                if (!confirm(
+                    "Tem certeza que deseja excluir este registro?"
+                )) return;
+
+                try {
+
+                    const resposta = await fetch("/api/vault/delete", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            senha,
+                            indice
+                        })
+                    });
+
+                    const resultado = await resposta.json();
+
+                    if (!resultado.success) {
+                        throw new Error(resultado.error);
+                    }
+
+                    alert("Registro excluído!");
+
+                    carregarCofre();
+
+                } catch (erro) {
+                    alert("Erro: " + erro.message);
+                }
+            };
+
+            card.append(
+                titulo,
+                informacao,
+                editar,
+                excluir
+            );
+
+            area.appendChild(card);
+
+        });
+
+    } catch (erro) {
+
+        area.textContent =
+            "Não foi possível desbloquear: " + erro.message;
+
+    }
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureKey | Gestão pessoal e segurança</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="crypto.css">
+    <link rel="stylesheet" href="organizador.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">◆</div>
+            <div>
+                <h2>SecureKey</h2>
+                <small>PERSONAL SECURITY</small>
+            </div>
+        </div>
+
+        <div class="menu-label">PRINCIPAL</div>
+
+        <button class="nav active" data-page="dashboard">▦ Dashboard</button>
+        <button class="nav" data-page="pessoal">◈ Organizador financeiro</button>
+        <button class="nav" data-page="senhas">⚿ Gerenciador de senhas</button>
+        <button class="nav" data-page="financeiro">▤ Cofre financeiro</button>
+        <button class="nav" data-page="documentos">▣ Documentos</button>
+        <button class="nav" data-page="mensagens">✉ Mensagens privadas</button>
+
+        <div class="menu-label">CRIPTOGRAFIA</div>
+
+        <button class="nav" data-page="mensagens">🔐 Criptografia integrada</button>
+
+        <div class="sidebar-bottom">
+            <div class="security-indicator">
+                <span class="online-dot"></span>
+                <div>
+                    <strong>Servidor local</strong>
+                    <small id="server-status">Verificando...</small>
+                </div>
+            </div>
+            <small class="version">SECUREKEY VERSION 2.1</small>
+        </div>
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1 id="page-title">Dashboard</h1>
+                <p>Central de proteção e gerenciamento de dados.</p>
+            </div>
+
+            <div class="top-actions">
+                <span class="local-tag">● LOCAL</span>
+            </div>
+        </header>
+
+
+        <section class="master-panel">
+            <div class="master-info">
+                <span class="eyebrow">AUTENTICAÇÃO DO COFRE</span>
+                <strong>Senha mestra</strong>
+                <small>Informe sua senha para acessar os registros.</small>
+            </div>
+
+            <div class="master-controls">
+                <input
+                    type="password"
+                    id="master-password"
+                    placeholder="Sua senha mestra"
+                    minlength="12"
+                    maxlength="128"
+                    autocomplete="off"
+                >
+                <button id="unlock-button" class="primary-button">
+                    Desbloquear
+                </button>
+            </div>
+            <p id="auth-message" class="feedback"></p>
+        </section>
+
+
+        <section id="dashboard" class="page active">
+
+            <div class="welcome">
+                <div>
+                    <span class="eyebrow">SEU AMBIENTE DIGITAL</span>
+                    <h2>Bem-vinda ao SecureKey.</h2>
+                    <p>Suas informações organizadas em um único ambiente.</p>
+                </div>
+                <div class="welcome-symbol">◈</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span>▣</span>
+                    <small>Senhas</small>
+                    <strong id="count-senhas">—</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>▤</span>
+                    <small>Financeiro</small>
+                    <strong id="count-financeiro">—</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>▧</span>
+                    <small>Documentos</small>
+                    <strong id="count-documentos">—</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>✉</span>
+                    <small>Mensagens</small>
+                    <strong id="count-mensagens">—</strong>
+                </div>
+            </div>
+
+            <div class="section-heading">
+                <h2>Seus módulos</h2>
+                <span>GERENCIAMENTO</span>
+            </div>
+
+            <div class="module-grid">
+
+                <button class="module-card" data-page="senhas">
+                    <span class="module-icon blue">⚿</span>
+                    <h3>Gerenciador de senhas</h3>
+                    <p>Organize suas contas e credenciais.</p>
+                    <span class="module-link">Acessar módulo →</span>
+                </button>
+
+                <button class="module-card" data-page="financeiro">
+                    <span class="module-icon green">▤</span>
+                    <h3>Cofre financeiro</h3>
+                    <p>Organize seus registros financeiros.</p>
+                    <span class="module-link">Acessar módulo →</span>
+                </button>
+
+                <button class="module-card" data-page="documentos">
+                    <span class="module-icon purple">▣</span>
+                    <h3>Documentos</h3>
+                    <p>Gerencie informações documentais.</p>
+                    <span class="module-link">Acessar módulo →</span>
+                </button>
+
+                <button class="module-card" data-page="mensagens">
+                    <span class="module-icon orange">✉</span>
+                    <h3>Mensagens privadas</h3>
+                    <p>Armazene suas anotações privadas.</p>
+                    <span class="module-link">Acessar módulo →</span>
+                </button>
+                <button class="module-card" data-page="mensagens">
+                    <span class="module-icon blue">🔐</span>
+                    <h3>Criptografia de mensagens</h3>
+                    <p>Criptografe, recupere e armazene mensagens privadas.</p>
+                    <span class="module-link">Acessar mensagens protegidas →</span>
+                </button>
+
+                <button class="module-card" data-page="pessoal">
+                    <span class="module-icon green">◈</span>
+                    <h3>Organizador financeiro</h3>
+                    <p>Armazene suas informações pessoais.</p>
+                    <span class="module-link">Acessar módulo →</span>
+                </button>
+
+            </div>
+
+            <div class="notice">
+                <strong>Proteção criptográfica</strong>
+                <p>Os registros são protegidos no armazenamento por AES-256-GCM, com chave derivada usando scrypt.</p>
+            </div>
+
+        </section>
+
+
+        <section id="records-page" class="page">
+
+            <div id="message-crypto-panel" class="content-card crypto-panel hidden">
+                <div class="crypto-heading">
+                    <div>
+                        <span class="eyebrow">CRIPTOGRAFIA APLICADA</span>
+                        <h2>Proteção de mensagens</h2>
+                        <p>Criptografe uma mensagem, visualize o texto transformado e teste a recuperação do conteúdo.</p>
+                    </div>
+                    <span class="crypto-lock">🔐</span>
+                </div>
+
+                <div class="field crypto-input-field">
+                    <label for="crypto-message">Mensagem para processar</label>
+                    <textarea id="crypto-message" rows="4"
+                        placeholder="Digite uma mensagem para criptografar ou cole um texto cifrado para recuperar..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="crypto-encrypt" class="primary-button">Criptografar mensagem</button>
+                    <button type="button" id="crypto-decrypt" class="secondary-button">Descriptografar mensagem</button>
+                    <button type="button" id="crypto-use-result" class="secondary-button" disabled>Usar resultado no formulário</button>
+                </div>
+
+                <div class="crypto-result">
+                    <span class="eyebrow">RESULTADO DO PROCESSAMENTO</span>
+                    <p id="crypto-result" aria-live="polite">O resultado aparecerá aqui.</p>
+                    <p id="crypto-feedback" class="feedback" aria-live="polite"></p>
+                </div>
+
+                <div class="crypto-note">
+                    <strong>Como a proteção funciona</strong>
+                    <p>A Cifra de Hill demonstra a transformação por matrizes e aritmética modular. Ao salvar um registro, o cofre utiliza AES-256-GCM para proteger os dados armazenados. A Cifra de Hill é didática e não deve ser usada isoladamente para proteger informações reais.</p>
+                </div>
+            </div>
+
+            <div id="documents-panel" class="content-card hidden">
+                <div class="section-heading">
+                    <div>
+                        <h2>Documentos protegidos</h2>
+                        <p>Guarde arquivos PDF e imagens JPG/JPEG criptografados.</p>
+                    </div>
+                    <span class="count-label">LIMITE: 15 MB</span>
+                </div>
+
+                <form id="document-upload-form">
+                    <div class="form-grid">
+                        <div class="field full">
+                            <label for="document-file">Selecione um documento (PDF, JPG ou JPEG)</label>
+                            <input
+                                type="file"
+                                id="document-file"
+                                accept=".pdf,.jpg,.jpeg,application/pdf,image/jpeg"
+                                required
+                            >
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">
+                            🔒 Guardar documento criptografado
+                        </button>
+                    </div>
+                    <p id="document-feedback" class="feedback" aria-live="polite"></p>
+                </form>
+
+                <div class="section-heading" style="margin-top: 28px;">
+                    <h2>Meus documentos</h2>
+                </div>
+                <div id="documents-list" class="record-list">
+                    <p class="empty-state">Desbloqueie o cofre para visualizar os documentos.</p>
+                </div>
+            </div>
+
+            <section id="finance-organizer" class="finance-organizer hidden">
+                <div class="fo-hero">
+                    <div>
+                        <span class="eyebrow">PLANEJAMENTO PESSOAL</span>
+                        <h2>Seu dinheiro, com clareza.</h2>
+                        <p>Acompanhe o que entra, o que sai e quanto sobra. Planeje o mês e compare com os valores realizados.</p>
+                    </div>
+                    <div class="fo-hero-mark">R$</div>
+                </div>
+
+                <div class="fo-toolbar">
+                    <div class="fo-month-wrap">
+                        <label for="fo-month">Mês de referência</label>
+                        <input type="month" id="fo-month">
+                    </div>
+                    <div class="fo-tabs" role="tablist" aria-label="Visão financeira">
+                        <button type="button" class="fo-tab active" data-fo-tab="acompanhamento">Acompanhamento</button>
+                        <button type="button" class="fo-tab" data-fo-tab="controle">Controle</button>
+                    </div>
+                </div>
+
+                <div id="finance-organizer-content">
+                    <div class="fo-empty">Desbloqueie o cofre para abrir seu planejamento financeiro.</div>
+                </div>
+            </section>
+
+            <div id="records-form-card" class="content-card">
+                <div class="section-heading">
+                    <div>
+                        <h2 id="module-heading">Registros</h2>
+                        <p id="module-description"></p>
+                    </div>
+                    <span id="record-count" class="count-label">0 registros</span>
+                </div>
+
+                <form id="record-form">
+
+                    <div id="dynamic-fields" class="form-grid"></div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">
+                            Salvar no cofre protegido
+                        </button>
+                        <button type="button" id="cancel-edit" class="secondary-button hidden">
+                            Cancelar edição
+                        </button>
+                    </div>
+
+                    <p id="record-feedback" class="feedback"></p>
+                </form>
+            </div>
+
+            <div id="records-list-card" class="content-card">
+                <div class="section-heading">
+                    <h2>Registros armazenados</h2>
+                    <input id="record-search" class="search-input"
+                        placeholder="Pesquisar...">
+                </div>
+
+                <div id="record-list" class="record-list">
+                    <p class="empty-state">Desbloqueie o cofre para visualizar os registros.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <footer>
+            SECUREKEY © 2026 · SISTEMA EXPERIMENTAL DE SEGURANÇA
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="app.js"></script>
+<script src="organizador.js"></script>
+
+</body>
+</html>
